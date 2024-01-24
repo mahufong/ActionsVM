@@ -10,3 +10,4 @@
 #sudo apt install -y neofetch
 
 echo 'l love you'
+mkdir outdir
