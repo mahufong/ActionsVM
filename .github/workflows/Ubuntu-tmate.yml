@@ -24,3 +24,21 @@ jobs:
 
     - name: Run End Script
       run: source ubuntu-end.sh
+      
+    - name: Check if Folder is Empty
+      id: check_folder
+      run: |
+        if [ "$(ls -A ./outdir)" ]; then
+          echo "Folder is not empty"
+          echo "::set-output name=folder_not_empty::true"
+        else
+          echo "Folder is empty"
+          echo "::set-output name=folder_not_empty::false"
+        fi
+    
+    - name: Upload Folder
+      uses: actions/upload-artifact@v4
+      if: steps.check_folder.outputs.folder_not_empty == 'true'
+      with:
+        name: out
+        path: ./outdir
